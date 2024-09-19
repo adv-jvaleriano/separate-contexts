@@ -4,6 +4,5 @@ import { Action } from "./capacity";
 export type TasksContextProps = {
   tasks: string[];
   showTasksStackCapacity: Function;
+  dispatch: Dispatch<Action> | undefined;
 };
-
-export type TasksDispatchContextProps = Dispatch<Action> | undefined;

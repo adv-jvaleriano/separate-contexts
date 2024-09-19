@@ -1,12 +1,11 @@
 import { FormEvent, useEffect } from 'react'
-import { useTasksContext, useTasksDispatchContext } from '../../contexts/TasksProvider/TasksProvider';
+import { useTasksContext } from '../../contexts/TasksProvider/TasksProvider';
 import { ADD_TASK } from '../../actions/tasks';
 import { TASKS_STACK_LIMIT } from '../../store/tasks';
 
 const TaskForm = () => {
 
-  const { tasks } = useTasksContext();
-  const dispatch = useTasksDispatchContext();
+  const { tasks, dispatch } = useTasksContext();
   
   if (dispatch === undefined) {
     throw new Error('useContext must be used within a TasksProvider');

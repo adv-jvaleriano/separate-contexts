@@ -2,14 +2,13 @@ import { createContext, ReactNode, useContext, useEffect, useReducer } from "rea
 import { CapacityMessage } from "../../components/Capacity/messages";
 import { INITIAL_TASKS, TASKS_STACK_LIMIT } from "../../store/tasks";
 import { tasksReducer } from "../../reducers/tasks";
-import { TasksContextProps, TasksDispatchContextProps } from "../../types/context";
+import { TasksContextProps } from "../../types/context";
 import { INITIAL_TASKS_CONTEXT } from "./constants";
+import { CapacityStatus } from "../../types/capacity";
 
 const TasksContext = createContext<TasksContextProps>(INITIAL_TASKS_CONTEXT);
-const TasksDispatchContext = createContext<TasksDispatchContextProps>(undefined);
 
 export const useTasksContext = () => useContext(TasksContext);
-export const useTasksDispatchContext = () => useContext(TasksDispatchContext);
 
 const TasksProvider = ({ children }: {children: ReactNode}) => {
 
@@ -17,9 +16,8 @@ const TasksProvider = ({ children }: {children: ReactNode}) => {
 
   const showTasksStackCapacity = (): void => {
     const tasksCount: number = tasks.length;
-    debugger
     let currentCapacity: string = '';
-    currentCapacity = tasksCount === 0 ? CapacityMessage[0] : tasksCount < TASKS_STACK_LIMIT ? CapacityMessage[1] : CapacityMessage[2];
+    currentCapacity = tasksCount === CapacityStatus.EMPTY ? CapacityMessage[CapacityStatus.EMPTY] : tasksCount < TASKS_STACK_LIMIT ? CapacityMessage[CapacityStatus.AVAILABLE] : CapacityMessage[CapacityStatus.FULL];
     alert(currentCapacity);
   };
 
@@ -30,12 +28,11 @@ const TasksProvider = ({ children }: {children: ReactNode}) => {
   return (
     <TasksContext.Provider value={{
         tasks, 
-        showTasksStackCapacity
+        showTasksStackCapacity,
+        dispatch,
       }}
     >
-      <TasksDispatchContext.Provider value={dispatch}>
-        {children}
-      </TasksDispatchContext.Provider>
+      {children}
     </TasksContext.Provider>
   )
 }

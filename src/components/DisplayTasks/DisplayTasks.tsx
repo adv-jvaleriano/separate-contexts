@@ -8,9 +8,9 @@ const DisplayTasks = () => {
   });
 
   return (
-    <div>
+    <>
       <TasksList />
-    </div>
+    </>
   )
 }
 

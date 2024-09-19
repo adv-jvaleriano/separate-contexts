@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { CLEAR_TASKS } from '../../actions/tasks';
-import { useTasksDispatchContext } from '../../contexts/TasksProvider/TasksProvider';
+import { useTasksContext } from '../../contexts/TasksProvider/TasksProvider';
+import { CapacityStatus } from '../../types/capacity';
 
 const Cleaner = () => {
-  const dispatch = useTasksDispatchContext();
+  const { tasks, dispatch } = useTasksContext();
   
   if (dispatch === undefined) {
     throw new Error('useContext must be used within a TasksProvider');
@@ -20,7 +21,7 @@ const Cleaner = () => {
           type: CLEAR_TASKS
         });
       }}
-      // disabled={tasks.length == 0}
+      disabled={tasks.length == CapacityStatus.EMPTY}
     >
       clear
     </button>

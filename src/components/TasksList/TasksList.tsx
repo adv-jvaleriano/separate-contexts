@@ -1,11 +1,10 @@
 import { useEffect } from "react";
-import { useTasksContext, useTasksDispatchContext } from "../../contexts/TasksProvider/TasksProvider";
+import { useTasksContext } from "../../contexts/TasksProvider/TasksProvider";
 import { REMOVE_TASK } from "../../actions/tasks";
 
 const TasksList = () => {
 
-  const { tasks } = useTasksContext();
-  const dispatch = useTasksDispatchContext();
+  const { tasks, dispatch } = useTasksContext();
 
   if (dispatch === undefined) {
     throw new Error('useContext must be used within a TasksProvider');
@@ -21,13 +20,14 @@ const TasksList = () => {
         <li key={index}>
           <span>{task}</span>
           <button onClick={() => {
-                if (tasks.length == 0) return;
-                dispatch({
-                  type: REMOVE_TASK,
-                  payload: task
-                });
-
-          }}>🗑️</button>
+            if (tasks.length == 0) return;
+            dispatch({
+              type: REMOVE_TASK,
+              payload: task
+            });
+          }}>
+            🗑️
+          </button>
         </li>
       ))}
     </ul>
